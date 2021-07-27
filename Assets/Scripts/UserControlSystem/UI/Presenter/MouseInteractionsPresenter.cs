@@ -1,6 +1,7 @@
 using System.Linq;
 using Abstractions;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UserControlSystem.UI.Model;
 
 namespace UserControlSystem.UI.Presenter
@@ -11,10 +12,17 @@ namespace UserControlSystem.UI.Presenter
         private Camera _camera;
         [SerializeField] 
         private SelectableValue _selectedObject;
-    
+        [SerializeField] 
+        private EventSystem _eventSystem;
+        
         private void Update()
         {
             if (!Input.GetMouseButtonUp(0))
+            {
+                return;
+            }
+            
+            if (_eventSystem.IsPointerOverGameObject())
             {
                 return;
             }

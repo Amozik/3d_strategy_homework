@@ -6,8 +6,7 @@ namespace UserControlSystem.UI.Model
 {
     [CreateAssetMenu(
         fileName = nameof(SelectableValue), 
-        menuName = "Strategy Game/" + nameof(SelectableValue), 
-        order = 0)]
+        menuName = "Strategy Game/" + nameof(SelectableValue))]
     public sealed class SelectableValue : ScriptableObject
     {
         public ISelectable CurrentValue { get; private set; }

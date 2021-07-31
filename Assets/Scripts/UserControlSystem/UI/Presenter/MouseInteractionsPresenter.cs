@@ -1,5 +1,6 @@
 using System.Linq;
 using Abstractions;
+using Abstractions.Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UserControlSystem.UI.Model;
@@ -20,6 +21,9 @@ namespace UserControlSystem.UI.Presenter
         [SerializeField] 
         private Transform _groundTransform;
 
+        [SerializeField]
+        private DamageableValue _damageableObject;
+        
         private Plane _groundPlane;
         
         private void Start()
@@ -40,26 +44,36 @@ namespace UserControlSystem.UI.Presenter
             }
             
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
+            var hits = Physics.RaycastAll(ray);
+            
             if (Input.GetMouseButtonUp(0))
             {
-                var hits = Physics.RaycastAll(ray);
-                if (hits.Length == 0)
-                {
-                    return;
-                }
-                var selectable = hits
-                    .Select(hit => hit.collider.GetComponentInParent<ISelectable>())
-                    .FirstOrDefault(c => c != null);
+                GetHitOfType<ISelectable>(hits, out var selectable);
                 _selectedObject.SetValue(selectable);
             }
             else
             {
-                if (_groundPlane.Raycast(ray, out var enter))
+                if (GetHitOfType<IDamageable>(hits, out var damageable))
+                {
+                    _damageableObject.SetValue(damageable);
+                } 
+                else if (_groundPlane.Raycast(ray, out var enter))
                 {
                     _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
                 }
             }
+        }
 
+        private bool GetHitOfType<T>(RaycastHit[] hits, out T result) where T : class
+        {
+            result = default;
+            if (hits.Length == 0)
+                return false;
+
+            result = hits
+                .Select(hit => hit.collider.GetComponentInParent<T>())
+                .FirstOrDefault(c => c != null);
+            return result != default;
         }
     }
 }

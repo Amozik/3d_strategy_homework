@@ -1,6 +1,6 @@
 ﻿namespace Abstractions.Commands.CommandInterfaces
 {
-    public class IStopCommand : ICommand
+    public interface IStopCommand : ICommand
     {
         
     }

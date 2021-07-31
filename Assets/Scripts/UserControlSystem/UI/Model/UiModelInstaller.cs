@@ -12,11 +12,14 @@ namespace UserControlSystem.UI.Model
         private AssetsContext _legacyContext;
         [SerializeField]
         private Vector3Value _groundClick;
+        [SerializeField]
+        private DamageableValue _damageableObject;
 
         public override void InstallBindings()
         {
             Container.Bind<AssetsContext>().FromInstance(_legacyContext);
             Container.Bind<Vector3Value>().FromInstance(_groundClick);
+            Container.Bind<DamageableValue>().FromInstance(_damageableObject);
 
             Container.Bind<CommandCreatorBase<IProduceUnitCommand>>()
                 .To<ProduceUnitCommandCommandCreator>().AsTransient();

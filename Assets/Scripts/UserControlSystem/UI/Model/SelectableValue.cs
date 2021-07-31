@@ -5,18 +5,14 @@ using UnityEngine;
 namespace UserControlSystem.UI.Model
 {
     [CreateAssetMenu(
-        fileName = nameof(SelectableValue), 
+        fileName = nameof(SelectableValue),
         menuName = "Strategy Game/" + nameof(SelectableValue))]
-    public sealed class SelectableValue : ScriptableObject
+    public sealed class SelectableValue : ChangeableValueModel<ISelectable>
     {
-        public ISelectable CurrentValue { get; private set; }
-        public event Action<ISelectable> OnSelected;
-
-        public void SetValue(ISelectable value)
+        public override void ChangeValue(ISelectable value)
         {
             CurrentValue?.UnSelect();
-            CurrentValue = value;
-            OnSelected?.Invoke(value);
+            base.ChangeValue(value);
             CurrentValue?.Select();
         }
     }

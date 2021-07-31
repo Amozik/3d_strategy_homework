@@ -8,15 +8,7 @@ namespace UserControlSystem.UI.Model
     [CreateAssetMenu(
         fileName = nameof(DamageableValue), 
         menuName = "Strategy Game/" + nameof(DamageableValue))]
-    public sealed class DamageableValue : ScriptableObject
+    public sealed class DamageableValue : ChangeableValueModel<IDamageable>
     {
-        public IDamageable CurrentValue { get; private set; }
-        public event Action<IDamageable> OnSelected;
-
-        public void SetValue(IDamageable value)
-        {
-            CurrentValue = value;
-            OnSelected?.Invoke(value);
-        }
     }
 }

@@ -17,7 +17,7 @@ namespace UserControlSystem.UI.Model.CommandCreators
         [Inject]
         private void Init(Vector3Value groundClicks)
         {
-            groundClicks.OnNewValue += OnNewValue;
+            groundClicks.OnChanged += OnNewValue;
         }
 
         private void OnNewValue(Vector3 groundClick)

@@ -17,7 +17,7 @@ namespace UserControlSystem.UI.Model.CommandCreators
         [Inject]
         private void Init(DamageableValue damageableObject)
         {
-            damageableObject.OnSelected += OnNewValue;
+            damageableObject.OnChanged += OnNewValue;
         }
 
         private void OnNewValue(IDamageable item)

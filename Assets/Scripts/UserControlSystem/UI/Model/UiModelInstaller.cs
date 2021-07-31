@@ -1,26 +1,13 @@
 ﻿using Abstractions.Commands.CommandInterfaces;
-using UnityEngine;
 using UserControlSystem.UI.Model.CommandCreators;
-using Utils.AssetsInjector;
 using Zenject;
 
 namespace UserControlSystem.UI.Model
 {
     public class UiModelInstaller : MonoInstaller
     {
-        [SerializeField]
-        private AssetsContext _legacyContext;
-        [SerializeField]
-        private Vector3Value _groundClick;
-        [SerializeField]
-        private DamageableValue _damageableObject;
-
         public override void InstallBindings()
         {
-            Container.Bind<AssetsContext>().FromInstance(_legacyContext);
-            Container.Bind<Vector3Value>().FromInstance(_groundClick);
-            Container.Bind<DamageableValue>().FromInstance(_damageableObject);
-
             Container.Bind<CommandCreatorBase<IProduceUnitCommand>>()
                 .To<ProduceUnitCommandCommandCreator>().AsTransient();
             Container.Bind<CommandCreatorBase<IAttackCommand>>()

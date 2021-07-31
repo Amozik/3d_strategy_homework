@@ -49,17 +49,17 @@ namespace UserControlSystem.UI.Presenter
             if (Input.GetMouseButtonUp(0))
             {
                 GetHitOfType<ISelectable>(hits, out var selectable);
-                _selectedObject.SetValue(selectable);
+                _selectedObject.ChangeValue(selectable);
             }
             else
             {
                 if (GetHitOfType<IDamageable>(hits, out var damageable))
                 {
-                    _damageableObject.SetValue(damageable);
+                    _damageableObject.ChangeValue(damageable);
                 } 
                 else if (_groundPlane.Raycast(ray, out var enter))
                 {
-                    _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+                    _groundClicksRMB.ChangeValue(ray.origin + ray.direction * enter);
                 }
             }
         }

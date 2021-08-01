@@ -1,6 +1,4 @@
-﻿using System;
-using Abstractions;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UserControlSystem.UI.Model
 {

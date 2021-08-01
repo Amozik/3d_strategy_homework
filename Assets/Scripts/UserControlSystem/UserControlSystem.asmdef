@@ -2,9 +2,10 @@
     "name": "UserControlSystem",
     "rootNamespace": "",
     "references": [
-        "GUID:e31c35834a05e3342b5b06f815ddacb4",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:ddfa8474313694747ac9ae13a66c77e1"
+        "Abstractions",
+        "Unity.TextMeshPro",
+        "Utils",
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

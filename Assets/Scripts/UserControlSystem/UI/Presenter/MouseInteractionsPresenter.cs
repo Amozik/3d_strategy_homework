@@ -1,5 +1,6 @@
 using System.Linq;
 using Abstractions;
+using Abstractions.Items;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UserControlSystem.UI.Model;
@@ -15,9 +16,24 @@ namespace UserControlSystem.UI.Presenter
         [SerializeField] 
         private EventSystem _eventSystem;
         
+        [SerializeField] 
+        private Vector3Value _groundClicksRMB;
+        [SerializeField] 
+        private Transform _groundTransform;
+
+        [SerializeField]
+        private DamageableValue _damageableObject;
+        
+        private Plane _groundPlane;
+        
+        private void Start()
+        {
+            _groundPlane = new Plane(_groundTransform.up, 0);
+        }
+        
         private void Update()
         {
-            if (!Input.GetMouseButtonUp(0))
+            if (!Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1))
             {
                 return;
             }
@@ -26,18 +42,38 @@ namespace UserControlSystem.UI.Presenter
             {
                 return;
             }
-        
-            var hits = Physics.RaycastAll(_camera.ScreenPointToRay(Input.mousePosition));
-            if (hits.Length == 0)
+            
+            var ray = _camera.ScreenPointToRay(Input.mousePosition);
+            var hits = Physics.RaycastAll(ray);
+            
+            if (Input.GetMouseButtonUp(0))
             {
-                return;
+                GetHitOfType<ISelectable>(hits, out var selectable);
+                _selectedObject.ChangeValue(selectable);
             }
-        
-            var selectable = hits
-                .Select(hit => hit.collider.GetComponentInParent<ISelectable>())
-                .FirstOrDefault(component => component != null);
-        
-            _selectedObject.SetValue(selectable);
+            else
+            {
+                if (GetHitOfType<IDamageable>(hits, out var damageable))
+                {
+                    _damageableObject.ChangeValue(damageable);
+                } 
+                else if (_groundPlane.Raycast(ray, out var enter))
+                {
+                    _groundClicksRMB.ChangeValue(ray.origin + ray.direction * enter);
+                }
+            }
+        }
+
+        private bool GetHitOfType<T>(RaycastHit[] hits, out T result) where T : class
+        {
+            result = default;
+            if (hits.Length == 0)
+                return false;
+
+            result = hits
+                .Select(hit => hit.collider.GetComponentInParent<T>())
+                .FirstOrDefault(c => c != null);
+            return result != default;
         }
     }
 }

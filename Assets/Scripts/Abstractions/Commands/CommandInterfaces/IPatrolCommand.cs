@@ -1,7 +1,9 @@
-﻿namespace Abstractions.Commands.CommandInterfaces
+﻿using UnityEngine;
+
+namespace Abstractions.Commands.CommandInterfaces
 {
-    public class IPatrolCommand : ICommand
+    public interface IPatrolCommand : ICommand
     {
-        
+        Vector3 CenterPoint { get; }
     }
 }

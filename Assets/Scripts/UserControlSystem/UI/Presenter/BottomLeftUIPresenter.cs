@@ -24,7 +24,7 @@ namespace UserControlSystem.UI.Presenter
     
         private void Start()
         {
-            _selectedValue.OnSelected += OnSelected;
+            _selectedValue.OnChanged += OnSelected;
             OnSelected(_selectedValue.CurrentValue);
         }
     
@@ -49,7 +49,7 @@ namespace UserControlSystem.UI.Presenter
 
         private void OnDestroy()
         {
-            _selectedValue.OnSelected -= OnSelected;
+            _selectedValue.OnChanged -= OnSelected;
         }
     }
 }

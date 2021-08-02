@@ -8,6 +8,7 @@ using UserControlSystem.CommandsRealization;
 using UserControlSystem.UI.Model;
 using UserControlSystem.UI.View;
 using Utils.AssetsInjector;
+using Zenject;
 
 namespace UserControlSystem.UI.Presenter
 {
@@ -17,17 +18,21 @@ namespace UserControlSystem.UI.Presenter
         private SelectableValue _selectable;
         [SerializeField]
         private CommandButtonsView _view;
-        [SerializeField] 
-        private AssetsContext _context;
+        
+        [Inject] 
+        private CommandButtonsModel _model;
         
         private ISelectable _currentSelectable;
 
         private void Start()
         {
-            _selectable.OnSelected += OnSelected;
-            OnSelected(_selectable.CurrentValue);
+            _view.OnClick += _model.OnCommandButtonClicked;
+            _model.OnCommandSent += _view.UnblockAllInteractions;
+            _model.OnCommandCancel += _view.UnblockAllInteractions;
+            _model.OnCommandAccepted += _view.BlockInteractions;
 
-            _view.OnClick += OnButtonClick;
+            _selectable.OnChanged += OnSelected;
+            OnSelected(_selectable.CurrentValue);
         }
 
         private void OnSelected(ISelectable selectable)
@@ -35,6 +40,10 @@ namespace UserControlSystem.UI.Presenter
             if (_currentSelectable == selectable)
             {
                 return;
+            }
+            if (_currentSelectable != null)
+            {
+                _model.OnSelectionChanged();
             }
             _currentSelectable = selectable;
 
@@ -46,31 +55,5 @@ namespace UserControlSystem.UI.Presenter
                 _view.MakeLayout(commandExecutors);
             }
         }
-
-        private void OnButtonClick(ICommandExecutor commandExecutor)
-        {
-            
-            switch (commandExecutor)
-            {
-                case CommandExecutorBase<IProduceUnitCommand> unitProducer:
-                    unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommandHeir()));
-                    return;
-                case CommandExecutorBase<IAttackCommand> attacker:
-                    attacker.ExecuteSpecificCommand(new AttackCommand());
-                    return;
-                case CommandExecutorBase<IMoveCommand> mover:
-                    mover.ExecuteSpecificCommand(new MoveCommand());
-                    return;
-                case CommandExecutorBase<IStopCommand> stopper:
-                    stopper.ExecuteSpecificCommand(new StopCommand());
-                    return;
-                case CommandExecutorBase<IPatrolCommand> patroller:
-                    patroller.ExecuteSpecificCommand(new PatrolCommand());
-                    return;
-                default:
-                    throw new ApplicationException($"{nameof(CommandButtonsPresenter)}.{nameof(OnButtonClick)}: Unknown type of commands executor: {commandExecutor.GetType().FullName}!");
-            }
-        }
-
     }
 }

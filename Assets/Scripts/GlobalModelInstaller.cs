@@ -1,5 +1,7 @@
+using Abstractions.Items;
 using UnityEngine;
 using UserControlSystem.UI.Model;
+using Utils;
 using Utils.AssetsInjector;
 using Zenject;
 
@@ -18,5 +20,8 @@ public class GlobalModelInstaller : ScriptableObjectInstaller<GlobalModelInstall
         Container.Bind<AssetsContext>().FromInstance(_legacyContext);
         Container.Bind<Vector3Value>().FromInstance(_groundClick);
         Container.Bind<DamageableValue>().FromInstance(_damageableObject);
+        
+        Container.Bind<IAwaitable<IDamageable>>().FromInstance(_damageableObject);
+        Container.Bind<IAwaitable<Vector3>>().FromInstance(_groundClick);
     }
 }

@@ -1,5 +1,3 @@
-using System;
-using Abstractions;
 using Abstractions.Items;
 using UnityEngine;
 

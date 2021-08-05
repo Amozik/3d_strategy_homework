@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
 using UnityEngine;
+using UnityEngine.AI;
+using Utils.Extensions;
 
 namespace Core.CommandExecutors
 {
@@ -12,23 +16,65 @@ namespace Core.CommandExecutors
         [SerializeField] 
         private float radius = 1;
         
-        private Vector3[] _waypoints = new Vector3[WAYPONTS_COUNT];
+        [SerializeField] 
+        private NavMeshAgent _navMeshAgent;
+        [SerializeField]
+        private UnitMovementStop _stop;
+        [SerializeField]
+        private Animator _animator;
         
-        public override void ExecuteSpecificCommand(IPatrolCommand command)
+        [SerializeField] 
+        private CommandExecutorStop _stopCommandExecutor;
+        
+        private Vector3[] _waypoints = new Vector3[WAYPONTS_COUNT];
+        private int _currentWaypointIndex;
+        private bool _isPatrolling = false;
+
+        public override async void ExecuteSpecificCommand(IPatrolCommand command)
         {
-            var centerPoint = command.CenterPoint;
+            GenerateWaypoints(command.CenterPoint);
+            _animator.SetBool("IsWalking", true);
+            _isPatrolling = true;
             
+            _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
+            
+            while (_isPatrolling)
+            {
+                _navMeshAgent.SetDestination(_waypoints[_currentWaypointIndex]);
+                
+                try
+                {
+                    await _stop.WithCancellation(_stopCommandExecutor.CancellationTokenSource.Token);
+                }
+                catch
+                {
+                    _navMeshAgent.isStopped = true;
+                    _navMeshAgent.ResetPath();
+                    _isPatrolling = false;
+                }
+                
+                _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
+            }
+            
+            _stopCommandExecutor.CancellationTokenSource.Dispose();
+            _stopCommandExecutor.CancellationTokenSource = null;
+
+            _currentWaypointIndex = 0;
+            _animator.SetBool("IsWalking", false);
+        }
+
+
+        private void GenerateWaypoints(Vector3 centerPoint)
+        {
             var vectorR = new Vector3(1, 0, 1);
             var vectorL = new Vector3(1, 0, -1);
-            
+
             for (var i = 0; i < 4; i++)
             {
                 var radius1 = radius * (i < WAYPONTS_COUNT / 2 ? 1 : -1);
-                
+
                 _waypoints[i] = centerPoint + (i % 2 == 0 ? vectorR : vectorL) * radius1;
             }
-
-            Debug.Log("Patrol");
         }
     }
 }

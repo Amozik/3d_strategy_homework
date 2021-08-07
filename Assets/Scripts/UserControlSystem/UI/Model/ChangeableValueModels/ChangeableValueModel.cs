@@ -2,7 +2,7 @@
 using UnityEngine;
 using Utils;
 
-namespace UserControlSystem.UI.Model
+namespace UserControlSystem.UI.Model.ChangeableValueModels
 {
     public abstract class ChangeableValueModel<T> : ScriptableObject, IAwaitable<T>
     {

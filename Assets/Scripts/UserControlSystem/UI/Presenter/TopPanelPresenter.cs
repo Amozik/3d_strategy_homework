@@ -26,7 +26,11 @@ namespace UserControlSystem.UI.Presenter
                 _inputField.text = $"{t.Minutes:D2}:{t.Seconds:D2}";
             });
 
-            _menuButton.OnClickAsObservable().Subscribe(_ => _menuGo.SetActive(true));
+            _menuButton.OnClickAsObservable().Subscribe(_ =>
+            {
+                _menuGo.SetActive(true);
+                Time.timeScale = 0;
+            });
         }
     }
 }

@@ -13,7 +13,11 @@ namespace UserControlSystem.UI.Presenter
 
         private void Start()
         {
-            _backButton.OnClickAsObservable().Subscribe(_ => gameObject.SetActive(false));
+            _backButton.OnClickAsObservable().Subscribe(_ =>
+            {
+                Time.timeScale = 1;
+                gameObject.SetActive(false);
+            });
             _exitButton.OnClickAsObservable().Subscribe(_ => Application.Quit());
         }
     }

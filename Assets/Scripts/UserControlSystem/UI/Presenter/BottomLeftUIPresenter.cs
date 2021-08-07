@@ -1,8 +1,10 @@
+using System;
 using Abstractions;
 using TMPro;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
-using UserControlSystem.UI.Model;
+using Zenject;
 
 namespace UserControlSystem.UI.Presenter
 {
@@ -18,14 +20,11 @@ namespace UserControlSystem.UI.Presenter
         private Image _sliderBackground;
         [SerializeField] 
         private Image _sliderFillImage;
-    
-        [SerializeField] 
-        private SelectableValue _selectedValue;
-    
-        private void Start()
+        
+        [Inject]
+        private void Init(IObservable<ISelectable> selectedValue)
         {
-            _selectedValue.OnChanged += OnSelected;
-            OnSelected(_selectedValue.CurrentValue);
+            selectedValue.Subscribe(OnSelected).AddTo(this);
         }
     
         private void OnSelected(ISelectable selected)
@@ -45,11 +44,6 @@ namespace UserControlSystem.UI.Presenter
                 _sliderBackground.color = color * 0.5f;
                 _sliderFillImage.color = color;
             }
-        }
-
-        private void OnDestroy()
-        {
-            _selectedValue.OnChanged -= OnSelected;
         }
     }
 }

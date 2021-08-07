@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -67,7 +68,8 @@ namespace UserControlSystem.UI.View
                     .Value;
                 buttonGameObject.SetActive(true);
                 var button = buttonGameObject.GetComponent<Button>();
-                button.onClick.AddListener(() => OnClick?.Invoke(currentExecutor));
+                button.OnClickAsObservable().TakeUntilDisable(buttonGameObject)
+                    .Subscribe(_ => OnClick?.Invoke(currentExecutor));
             }
         }
         
@@ -82,7 +84,6 @@ namespace UserControlSystem.UI.View
         {
             foreach (var kvp in _buttonsByExecutorType)
             {
-                kvp.Value.GetComponent<Button>().onClick.RemoveAllListeners();
                 kvp.Value.SetActive(false);
             }
         }

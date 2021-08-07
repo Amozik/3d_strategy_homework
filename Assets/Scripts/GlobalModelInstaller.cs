@@ -1,3 +1,5 @@
+using System;
+using Abstractions;
 using Abstractions.Items;
 using UnityEngine;
 using UserControlSystem.UI.Model;
@@ -14,12 +16,16 @@ public class GlobalModelInstaller : ScriptableObjectInstaller<GlobalModelInstall
     private Vector3Value _groundClick;
     [SerializeField]
     private DamageableValue _damageableObject;
+    [SerializeField]
+    private SelectableValue _selectableObject;
     
     public override void InstallBindings()
     {
         Container.Bind<AssetsContext>().FromInstance(_legacyContext);
         Container.Bind<Vector3Value>().FromInstance(_groundClick);
         Container.Bind<DamageableValue>().FromInstance(_damageableObject);
+        
+        Container.Bind<IObservable<ISelectable>>().FromInstance(_selectableObject);
         
         Container.Bind<IAwaitable<IDamageable>>().FromInstance(_damageableObject);
         Container.Bind<IAwaitable<Vector3>>().FromInstance(_groundClick);

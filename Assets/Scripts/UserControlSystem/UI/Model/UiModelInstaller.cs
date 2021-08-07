@@ -20,6 +20,10 @@ namespace UserControlSystem.UI.Model
                 .To<StopCommandCommandCreator>().AsTransient();
 
             Container.Bind<CommandButtonsModel>().AsTransient();
+            Container.BindInterfacesAndSelfTo<BottomCenterModel>().AsSingle();
+
+            Container.Bind<float>().WithId("Chomper").FromInstance(5f);
+            Container.Bind<string>().WithId("Chomper").FromInstance("Chomper");
         }
     }
 }

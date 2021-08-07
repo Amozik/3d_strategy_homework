@@ -1,12 +1,12 @@
+using Abstractions.Items;
 using UnityEngine;
 
 namespace Abstractions
 {
-    public interface ISelectable
+    public interface ISelectable : IIconHolder
     {
         float Health { get; }
         float MaxHealth { get; }
-        Sprite Icon { get; }
         void Select();
         void UnSelect();
     }

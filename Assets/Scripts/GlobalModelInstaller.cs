@@ -18,6 +18,9 @@ public class GlobalModelInstaller : ScriptableObjectInstaller<GlobalModelInstall
     private DamageableValue _damageableObject;
     [SerializeField]
     private SelectableValue _selectableObject;
+    [SerializeField] 
+    private Sprite _chomperSprite;
+    
     
     public override void InstallBindings()
     {
@@ -29,5 +32,7 @@ public class GlobalModelInstaller : ScriptableObjectInstaller<GlobalModelInstall
         
         Container.Bind<IAwaitable<IDamageable>>().FromInstance(_damageableObject);
         Container.Bind<IAwaitable<Vector3>>().FromInstance(_groundClick);
+        
+        Container.Bind<Sprite>().WithId("Chomper").FromInstance(_chomperSprite);
     }
 }

@@ -24,7 +24,7 @@ namespace UserControlSystem.UI.View
 
         private Dictionary<Type, GameObject> _buttonsByExecutorType;
         
-        public Action<ICommandExecutor> OnClick;
+        public Action<ICommandExecutor, ICommandsQueue> OnClick;
         
         private void Start()
         {
@@ -57,7 +57,7 @@ namespace UserControlSystem.UI.View
             _produceUnitButton.GetComponent<Selectable>().interactable = value;
         }
 
-        public void MakeLayout(IEnumerable<ICommandExecutor> commandExecutors)
+        public void MakeLayout(IEnumerable<ICommandExecutor> commandExecutors, ICommandsQueue commandsQueue)
         {
             foreach (var currentExecutor in commandExecutors)
             {
@@ -69,7 +69,7 @@ namespace UserControlSystem.UI.View
                 buttonGameObject.SetActive(true);
                 var button = buttonGameObject.GetComponent<Button>();
                 button.OnClickAsObservable().TakeUntilDisable(buttonGameObject)
-                    .Subscribe(_ => OnClick?.Invoke(currentExecutor));
+                    .Subscribe(_ => OnClick?.Invoke(currentExecutor, commandsQueue));
             }
         }
         

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Threading;
+using System.Threading.Tasks;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace Core.CommandExecutors
         [SerializeField] 
         private CommandExecutorStop _stopCommandExecutor;
         
-        public override async void ExecuteSpecificCommand(IMoveCommand command)
+        public override async Task ExecuteSpecificCommand(IMoveCommand command)
         {
             _navMeshAgent.SetDestination(command.Target);
             _animator.SetBool(IsWalking, true);

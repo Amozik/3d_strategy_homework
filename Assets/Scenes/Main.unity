@@ -1422,18 +1422,21 @@ MonoBehaviour:
   _productionProgressSlider: {fileID: 1100421714}
   _currentUnitName: {fileID: 1067775022}
   _images:
+  - {fileID: 641388120}
   - {fileID: 1841004240}
   - {fileID: 860303000}
   - {fileID: 1354310085}
   - {fileID: 1152099587}
   - {fileID: 1060506288}
   _imageHolders:
+  - {fileID: 641388117}
   - {fileID: 1841004238}
   - {fileID: 860302997}
   - {fileID: 1354310082}
   - {fileID: 1152099584}
   - {fileID: 1060506285}
   _buttons:
+  - {fileID: 641388119}
   - {fileID: 1841004242}
   - {fileID: 860302999}
   - {fileID: 1354310084}

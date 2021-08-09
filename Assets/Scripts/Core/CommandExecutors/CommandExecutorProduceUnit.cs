@@ -1,4 +1,5 @@
-﻿using Abstractions.Commands;
+﻿using System.Threading.Tasks;
+using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
 using Abstractions.Items.Production;
 using Core.UnitTasks;
@@ -16,7 +17,7 @@ namespace Core.CommandExecutors
         [SerializeField] 
         private Transform _unitsParent;
         [SerializeField] 
-        private int _maximumUnitsInQueue = 5;
+        private int _maximumUnitsInQueue = 6;
 
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
 
@@ -59,12 +60,13 @@ namespace Core.CommandExecutors
 
         public void Cancel(int index) => RemoveTaskAtIndex(index);
         
-        public override void ExecuteSpecificCommand(IProduceUnitCommand command)
+        public override Task ExecuteSpecificCommand(IProduceUnitCommand command)
         {
             if (_queue.Count >= _maximumUnitsInQueue)
-                return;
+                return Task.CompletedTask;
             
             _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName));
+            return Task.CompletedTask;
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Core.CommandExecutors
         private int _currentWaypointIndex;
         private bool _isPatrolling = false;
 
-        public override async void ExecuteSpecificCommand(IPatrolCommand command)
+        public override async Task ExecuteSpecificCommand(IPatrolCommand command)
         {
             GenerateWaypoints(command.CenterPoint);
             _animator.SetBool("IsWalking", true);

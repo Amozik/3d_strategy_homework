@@ -16,6 +16,8 @@ namespace Core.CommandExecutors
         
         [SerializeField] 
         private NavMeshAgent _navMeshAgent;
+        [SerializeField] 
+        private NavMeshObstacle _obstacle;
         [SerializeField]
         private UnitMovementStop _stop;
         [SerializeField]
@@ -26,6 +28,9 @@ namespace Core.CommandExecutors
         
         public override async Task ExecuteSpecificCommand(IMoveCommand command)
         {
+            _obstacle.enabled = false;
+            _navMeshAgent.enabled = true;
+            
             _navMeshAgent.SetDestination(command.Target);
             _animator.SetBool(IsWalking, true);
             
@@ -43,6 +48,9 @@ namespace Core.CommandExecutors
             _stopCommandExecutor.CancellationTokenSource = null;
 
             _animator.SetBool(IsWalking, false);
+            
+            _navMeshAgent.enabled = false;
+            _obstacle.enabled = true;
         }
 
         public void PlayStep()

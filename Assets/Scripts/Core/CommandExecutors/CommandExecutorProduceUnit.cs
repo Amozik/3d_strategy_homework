@@ -2,6 +2,7 @@
 using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
 using Abstractions.Items.Production;
+using Core.CommandsRealization;
 using Core.UnitTasks;
 using UniRx;
 using UnityEngine;
@@ -17,6 +18,8 @@ namespace Core.CommandExecutors
         [SerializeField] 
         private Transform _unitsParent;
         [SerializeField] 
+        private Transform _pickupPoint;
+        [SerializeField] 
         private int _maximumUnitsInQueue = 6;
 
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
@@ -27,8 +30,10 @@ namespace Core.CommandExecutors
         {
             var xRandom = Random.Range(MIN_INCLUSIVE, MAX_INCLUSIVE);
             var zRandom = Random.Range(MIN_INCLUSIVE, MAX_INCLUSIVE);
-            Instantiate(unitPrefab, new Vector3(xRandom, ZERO, zRandom), Quaternion.identity,
+            var unit = Instantiate(unitPrefab, new Vector3(xRandom, ZERO, zRandom), Quaternion.identity,
                 _unitsParent);
+
+            unit.GetComponent<CommandExecutorMove>().ExecuteCommand(new MoveCommand(_pickupPoint.position));
         }
         
         private void Update()

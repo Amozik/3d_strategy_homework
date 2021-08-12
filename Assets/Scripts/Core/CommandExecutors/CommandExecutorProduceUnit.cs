@@ -3,6 +3,7 @@ using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
 using Abstractions.Items.Production;
 using Core.CommandsRealization;
+using Core.Items;
 using Core.UnitTasks;
 using UniRx;
 using UnityEngine;
@@ -34,6 +35,7 @@ namespace Core.CommandExecutors
                 _unitsParent);
 
             unit.GetComponent<CommandExecutorMove>().ExecuteCommand(new MoveCommand(_pickupPoint.position));
+            unit.GetComponent<FactionMember>().SetFaction(GetComponent<FactionMember>().FactionId);
         }
         
         private void Update()

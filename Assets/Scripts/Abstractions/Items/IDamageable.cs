@@ -1,7 +1,7 @@
 ﻿namespace Abstractions.Items
 {
-    public interface IDamageable
+    public interface IDamageable : IHealthHolder
     {
-        Health Health { get; }
+        void ReceiveDamage(int amount);
     }
 }

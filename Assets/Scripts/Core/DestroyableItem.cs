@@ -10,11 +10,29 @@ namespace Core
         [SerializeField]
         private int _maxHealth;
         
-        public Health Health { get; private set; }
+        private float _health;
+
+        public float Health => _health;
+        public float MaxHealth => _maxHealth;
 
         private void Awake()
         {
-            Health = new Health(_maxHealth, _maxHealth);
+            _health = _maxHealth;
         }
+        
+        public void ReceiveDamage(int amount)
+        {
+            if (_health <= 0)
+            {
+                return;
+            }
+            _health -= amount;
+            if (_health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        float IHealthHolder.Health => _health;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Abstractions.Items;
+﻿using System;
+using Abstractions.Items;
 using UnityEngine;
 
 namespace Core.Items
@@ -13,6 +14,18 @@ namespace Core.Items
         public void SetFaction(int factionId)
         {
             _factionId = factionId;
+            
+            FactionsManager.Instance.Register(factionId, GetInstanceID());
+        }
+
+        private void Awake()
+        {
+            FactionsManager.Instance.Register(_factionId, GetInstanceID());
+        }
+        
+        private void OnDestroy()
+        {
+            FactionsManager.Instance.Unregister(_factionId, GetInstanceID());
         }
     }
 }

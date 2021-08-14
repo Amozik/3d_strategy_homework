@@ -28,9 +28,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145403298284193129}
-  m_LocalRotation: {x: -0, y: 0.5265042, z: -0, w: 0.8501726}
+  m_LocalRotation: {x: 0, y: 0.52650326, z: 0, w: 0.8501731}
   m_LocalPosition: {x: 2.51, y: 0, z: -0.59}
-  m_LocalScale: {x: 0.5337, y: 0.43571, z: 0.43679}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 145403298283903307}
   - {fileID: 145403298283903309}
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _unitsParent: {fileID: 0}
   _pickupPoint: {fileID: 7358872007432597510}
-  _maximumUnitsInQueue: 5
+  _maximumUnitsInQueue: 6
 --- !u!114 &145403298284193134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1e60418b6a4bcda1e1aea846c3db8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _factionId: 0
+  _factionId: 1
 --- !u!1 &145403298284193131
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7358872007432597511}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.5, y: 0, z: 0}
+  m_LocalPosition: {x: -4.21, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 145403298283903305}

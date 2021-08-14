@@ -42,8 +42,7 @@ namespace Core.CommandExecutors
         private Transform _targetTransform;
         private AttackOperation _currentAttackOp;
 
-        [Inject]
-        private void Init()
+        public void Awake()
         {
             _targetPositions
                 .Select(value => new Vector3((float) Math.Round(value.x, 2), (float) Math.Round(value.y, 2),
@@ -73,6 +72,7 @@ namespace Core.CommandExecutors
             _navMeshAgent.isStopped = true;
             _navMeshAgent.ResetPath();
             _animator.SetTrigger("Attack");
+            _animator.SetBool("IsWalking", false);
             target.ReceiveDamage(GetComponent<IDamageDealer>().Damage);
         }
 
@@ -81,12 +81,25 @@ namespace Core.CommandExecutors
             _obstacle.enabled = false;
             _navMeshAgent.enabled = true;
             _navMeshAgent.destination = position;
-            _animator.SetBool("isWalking", true);
+            _animator.SetBool("IsWalking", true);
         }
 
+        private bool IsFriendlyTarget(Component commandTarget)
+        {
+            var targetFactionMember = commandTarget.GetComponent<IFactionMember>();
+            var factionMember = GetComponent<IFactionMember>();
+
+            return factionMember.FactionId == targetFactionMember.FactionId;
+        }
+        
         public override async Task ExecuteSpecificCommand(IAttackCommand command)
         {
-            _targetTransform = (command.Target as Component).transform;
+            var commandTarget = command.Target as Component;
+
+            if (IsFriendlyTarget(commandTarget))
+                return;
+
+            _targetTransform = commandTarget.transform;
             _currentAttackOp = new AttackOperation(this, command.Target);
             Update();
             _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();

@@ -2956,6 +2956,9 @@ GameObject:
   - component: {fileID: -6088421269165786809}
   - component: {fileID: 606679584634812901}
   - component: {fileID: 7083422582038576023}
+  - component: {fileID: 8498392389791038330}
+  - component: {fileID: -7275678662068700302}
+  - component: {fileID: 7587920145644707830}
   m_Layer: 0
   m_Name: Chomper
   m_TagString: Untagged
@@ -3017,6 +3020,7 @@ MonoBehaviour:
   _outline: {fileID: 0}
   _animator: {fileID: 606679584627411506}
   _stopCommandExecutor: {fileID: 606679584634812911}
+  _visionRadius: 5
 --- !u!114 &6994682504412123119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3157,6 +3161,43 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &8498392389791038330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606679584634812912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08623c4c3ec543988181e48a1a89e4b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-7275678662068700302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606679584634812912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df2f4e7bcf34325b82537d7be793bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7587920145644707830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606679584634812912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166aa50df3e54e35bb0b666ce4e3d71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _queue: {fileID: 6994682504412123119}
 --- !u!1 &606679584634812914
 GameObject:
   m_ObjectHideFlags: 0

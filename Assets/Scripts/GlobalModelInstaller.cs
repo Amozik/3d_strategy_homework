@@ -2,6 +2,7 @@ using System;
 using Abstractions;
 using Abstractions.Items;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UserControlSystem.UI.Model;
 using Utils;
 using Utils.AssetsInjector;
@@ -34,5 +35,13 @@ public class GlobalModelInstaller : ScriptableObjectInstaller<GlobalModelInstall
         Container.Bind<IAwaitable<Vector3>>().FromInstance(_groundClick);
         
         Container.Bind<Sprite>().WithId("Chomper").FromInstance(_chomperSprite);
+        
+        SceneManager.sceneUnloaded += SceneManagerOnSceneUnloaded;
+    }
+    
+    private void SceneManagerOnSceneUnloaded(Scene arg0)
+    {
+        _selectableObject.ChangeValue(null);
+        _damageableObject.ChangeValue(null);
     }
 }

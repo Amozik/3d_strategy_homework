@@ -14,6 +14,8 @@ namespace Core
         private ReactiveCollection<ICommand> _queue = new ReactiveCollection<ICommand>();
         private Dictionary<Type, ICommandExecutor> _commandExecutors;
 
+        public ICommand CurrentCommand => _queue.Count > 0 ? _queue[0] : default;
+        
         private void Start()
         {
             _commandExecutors = GetComponents<ICommandExecutor>().ToDictionary(commandExecutor => commandExecutor.GetCommandType());

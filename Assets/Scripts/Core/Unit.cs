@@ -8,7 +8,7 @@ using Utils.QuickOutline;
 
 namespace Core
 {
-    public class Unit : MonoBehaviour, ISelectable, IDamageable, IDamageDealer
+    public class Unit : MonoBehaviour, ISelectable, IDamageable, IDamageDealer, IAutomaticAttacker
     {
         private const int MIN_HEALTH_VALUE = 50;
         private const int MAX_HEALTH_VALUE = 200;
@@ -36,12 +36,15 @@ namespace Core
         [SerializeField] 
         private CommandExecutorStop _stopCommandExecutor;
         
+        [SerializeField] private float _visionRadius = 3f;
+        
         private float _health = MIN_HEALTH_VALUE;
 
         public int Damage => _damage;
         public float Health => _health;
         public float MaxHealth => _maxHealth;
         public Sprite Icon => _icon;
+        public float VisionRadius => _visionRadius;
         
         private void Awake()
         {

@@ -29,7 +29,7 @@ namespace UserControlSystem.UI.Presenter
                 _panel.SetActive(true);
                 _text.text = faction == 0 ? $"Everybody loose" : $"Faction {faction} win";
                 Time.timeScale = 0;
-            });
+            }).AddTo(this);
         }
 
         private void RestartGame()

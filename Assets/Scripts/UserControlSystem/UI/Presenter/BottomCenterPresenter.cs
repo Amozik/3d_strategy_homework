@@ -51,7 +51,7 @@ namespace UserControlSystem.UI.Presenter
                         view.SetTask(unitProducer.Queue[i], i);
                     }
                 }
-            });
+            }).AddTo(this);
         }
     }
 }

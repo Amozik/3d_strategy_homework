@@ -1,11 +1,12 @@
 using Abstractions;
+using Abstractions.Items;
 using UnityEngine;
 using Utils.Extensions;
 using Utils.QuickOutline;
 
 namespace Core
 {
-    public sealed class MainBuilding : MonoBehaviour, ISelectable
+    public sealed class MainBuilding : MonoBehaviour, ISelectable, IDamageable
     {
         private const int MIN_HEALTH_VALUE = 100;
         private const int MAX_HEALTH_VALUE = 1000;
@@ -51,6 +52,19 @@ namespace Core
         public void UnSelect()
         {
             _outline.enabled = false;
+        }
+        
+        public void ReceiveDamage(int amount)
+        {
+            if (_health <= 0)
+            {
+                return;
+            }
+            _health -= amount;
+            if (_health <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

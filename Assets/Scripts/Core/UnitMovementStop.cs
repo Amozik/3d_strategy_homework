@@ -32,7 +32,7 @@ namespace Core
 
         private void Update()
         {
-            if (!_agent.pathPending)
+            if (_agent.enabled && !_agent.pathPending)
             {
                 if (_agent.remainingDistance <= _agent.stoppingDistance)
                 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Threading;
+using System.Threading.Tasks;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace Core.CommandExecutors
         
         [SerializeField] 
         private NavMeshAgent _navMeshAgent;
+        [SerializeField] 
+        private NavMeshObstacle _obstacle;
         [SerializeField]
         private UnitMovementStop _stop;
         [SerializeField]
@@ -23,8 +26,11 @@ namespace Core.CommandExecutors
         [SerializeField] 
         private CommandExecutorStop _stopCommandExecutor;
         
-        public override async void ExecuteSpecificCommand(IMoveCommand command)
+        public override async Task ExecuteSpecificCommand(IMoveCommand command)
         {
+            _obstacle.enabled = false;
+            _navMeshAgent.enabled = true;
+            
             _navMeshAgent.SetDestination(command.Target);
             _animator.SetBool(IsWalking, true);
             
@@ -42,6 +48,9 @@ namespace Core.CommandExecutors
             _stopCommandExecutor.CancellationTokenSource = null;
 
             _animator.SetBool(IsWalking, false);
+            
+            _navMeshAgent.enabled = false;
+            _obstacle.enabled = true;
         }
 
         public void PlayStep()

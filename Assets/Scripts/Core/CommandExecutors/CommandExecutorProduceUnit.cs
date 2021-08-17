@@ -22,6 +22,18 @@ namespace Core.CommandExecutors
         private Transform _pickupPoint;
         [SerializeField] 
         private int _maximumUnitsInQueue = 6;
+        
+        [SerializeField] 
+        private GameObject _unitPrefab;
+
+        [SerializeField] 
+        private string _unitName;
+
+        [SerializeField] 
+        private Sprite _unitIcon;
+
+        [SerializeField] 
+        private float _productionTime = 5f;
 
         private ReactiveCollection<IUnitProductionTask> _queue = new ReactiveCollection<IUnitProductionTask>();
 
@@ -72,7 +84,7 @@ namespace Core.CommandExecutors
             if (_queue.Count >= _maximumUnitsInQueue)
                 return Task.CompletedTask;
             
-            _queue.Add(new UnitProductionTask(command.ProductionTime, command.Icon, command.UnitPrefab, command.UnitName));
+            _queue.Add(new UnitProductionTask(_productionTime, _unitIcon, _unitPrefab, _unitName));
             return Task.CompletedTask;
         }
     }

@@ -2951,6 +2951,7 @@ GameObject:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
+  - component: {fileID: 963194229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3023,6 +3024,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
+--- !u!114 &963194229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cd3aa4936234b4f9a2a31cf8a0d811e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panSpeed: 10
+  _panBorderThickness: 10
+  _panLimit: {x: 40, y: 30}
+  _scrollSpeed: 20
+  _minY: 10
+  _maxY: 120
 --- !u!1001 &967015195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7743,9 +7762,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: VegetationLarge01_02
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 623711813, guid: f1a576161d9901f45ab56ff379f451c3, type: 3}
-    - {fileID: 5736063243808159752, guid: f1a576161d9901f45ab56ff379f451c3, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1a576161d9901f45ab56ff379f451c3, type: 3}
 --- !u!1001 &6975880784286829501
 PrefabInstance:

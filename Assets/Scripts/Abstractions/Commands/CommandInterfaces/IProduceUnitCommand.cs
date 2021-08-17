@@ -3,11 +3,8 @@ using UnityEngine;
 
 namespace Abstractions.Commands.CommandInterfaces
 {
-    public interface IProduceUnitCommand : ICommand, IIconHolder
+    public interface IProduceUnitCommand : ICommand
     {
-        float ProductionTime { get; }
-        GameObject UnitPrefab { get; }
-        string UnitName { get; }
     }
 
 }

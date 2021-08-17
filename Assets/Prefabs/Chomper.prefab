@@ -3094,6 +3094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 3
   _navMeshAgent: {fileID: 606679584634812901}
+  _obstacle: {fileID: 7083422582038576023}
   _stop: {fileID: 606679584634812903}
   _animator: {fileID: 606679584627411506}
   _stopCommandExecutor: {fileID: 606679584634812911}

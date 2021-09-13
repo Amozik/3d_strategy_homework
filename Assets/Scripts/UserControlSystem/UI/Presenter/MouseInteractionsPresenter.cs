@@ -1,9 +1,12 @@
 using System.Linq;
 using Abstractions;
+using Abstractions.Commands;
+using Abstractions.Commands.CommandInterfaces;
 using Abstractions.Items;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UserControlSystem.CommandsRealization;
 using UserControlSystem.UI.Model;
 
 namespace UserControlSystem.UI.Presenter
@@ -29,6 +32,8 @@ namespace UserControlSystem.UI.Presenter
         private DamageableValue _damageableObject;
         
         private Plane _groundPlane;
+
+        private ISelectable _currentSelectable;
         
         private void Start()
         {
@@ -53,6 +58,7 @@ namespace UserControlSystem.UI.Presenter
                 {
                     GetHitOfType<ISelectable>(hits, out var selectable);
                     _selectedObject.ChangeValue(selectable);
+                    _currentSelectable = selectable;
                     break;
                 }
                 case RIGHT_MOUSE_BTN:
@@ -63,7 +69,11 @@ namespace UserControlSystem.UI.Presenter
                     } 
                     else if (_groundPlane.Raycast(ray, out var enter))
                     {
-                        _groundClicksRMB.ChangeValue(ray.origin + ray.direction * enter);
+                        var target = ray.origin + ray.direction * enter;
+                        _groundClicksRMB.ChangeValue(target);
+
+                        TryMove(target);
+
                     }
                     break;
                 }
@@ -82,6 +92,28 @@ namespace UserControlSystem.UI.Presenter
                 .Select(hit => hit.collider.GetComponentInParent<T>())
                 .FirstOrDefault(c => c != null);
             return result != default;
+        }
+
+        private bool TryMove(Vector3 target)
+        {
+            var currentSelectable = _currentSelectable as Component;
+
+            if (currentSelectable == null)
+                return false;
+
+            if (!currentSelectable.GetComponentInParent<CommandExecutorBase<IMoveCommand>>()) 
+                return false;
+            
+            var queue = currentSelectable.GetComponentInParent<ICommandsQueue>();
+
+            if (queue == null)
+                return false;
+
+            if (queue.CurrentCommand != default)
+                return false;
+                
+            queue.EnqueueCommand(new MoveCommand(target));
+            return true;
         }
     }
 }

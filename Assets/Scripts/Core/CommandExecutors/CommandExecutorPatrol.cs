@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Abstractions.Commands;
 using Abstractions.Commands.CommandInterfaces;
@@ -18,6 +17,8 @@ namespace Core.CommandExecutors
         
         [SerializeField] 
         private NavMeshAgent _navMeshAgent;
+        [SerializeField] 
+        private NavMeshObstacle _obstacle;
         [SerializeField]
         private UnitMovementStop _stop;
         [SerializeField]
@@ -35,6 +36,8 @@ namespace Core.CommandExecutors
             GenerateWaypoints(command.CenterPoint);
             _animator.SetBool("IsWalking", true);
             _isPatrolling = true;
+            _obstacle.enabled = false;
+            _navMeshAgent.enabled = true;
             
             _stopCommandExecutor.CancellationTokenSource = new CancellationTokenSource();
             
@@ -51,6 +54,8 @@ namespace Core.CommandExecutors
                     _navMeshAgent.isStopped = true;
                     _navMeshAgent.ResetPath();
                     _isPatrolling = false;
+                    _navMeshAgent.enabled = false;
+                    _obstacle.enabled = true;
                 }
                 
                 _currentWaypointIndex = (_currentWaypointIndex + 1) % _waypoints.Length;
